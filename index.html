@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🐟 SeaGold - Seafood Catalogue</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --yellow:#FFD600;--yellow-light:#FFF176;--yellow-dark:#F9A825;
+      --yellow-glow:rgba(255,214,0,0.2);--black:#0a0a0a;--black-light:#1a1a1a;
+      --black-card:#141414;--black-border:#2a2a2a;--white:#fff;--gray:#888;
+    }
+    body{font-family:'Inter',sans-serif;background:var(--black);color:var(--white);min-height:100vh;overflow-x:hidden}
+
+    .bg-glow{position:fixed;width:600px;height:600px;border-radius:50%;filter:blur(150px);opacity:.12;pointer-events:none;z-index:0}
+    .bg-glow-1{top:-200px;left:-100px;background:var(--yellow)}
+    .bg-glow-2{bottom:-200px;right:-100px;background:var(--yellow-dark)}
+
+    /* Header */
+    .header{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 24px;background:rgba(10,10,10,.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--black-border)}
+    .header-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+    .logo-icon{width:40px;height:40px;background:var(--yellow);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .logo-text{font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:var(--yellow)}
+    .logo-sub{font-size:10px;color:var(--gray);font-weight:500;letter-spacing:3px;text-transform:uppercase}
+    .header-actions{display:flex;align-items:center;gap:12px}
+    .search-box{display:flex;align-items:center;background:var(--black-light);border:1px solid var(--black-border);border-radius:12px;padding:8px 16px;gap:8px;transition:all .3s}
+    .search-box:focus-within{border-color:var(--yellow);box-shadow:0 0 0 3px var(--yellow-glow)}
+    .search-box input{background:none;border:none;outline:none;color:var(--white);font-size:14px;width:200px;font-family:'Inter',sans-serif}
+    .search-box input::placeholder{color:var(--gray)}
+    .cart-btn{position:relative;width:44px;height:44px;background:var(--yellow);border:none;border-radius:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .cart-btn:hover{transform:scale(1.05);box-shadow:0 0 20px var(--yellow-glow)}
+    .cart-btn:active{transform:scale(.95)}
+    .cart-badge{position:absolute;top:-5px;right:-5px;background:#FF1744;color:#fff;font-size:10px;font-weight:700;min-width:20px;height:20px;border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--black);transition:all .3s}
+    .cart-badge.empty{display:none}
+    .cart-badge.bounce{animation:badgeBounce .4s ease}
+    @keyframes badgeBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.4)}}
+
+    /* Warning Banner */
+    .warning-banner{position:relative;z-index:1;margin-top:80px;background:rgba(255,214,0,.08);border-bottom:1px solid rgba(255,214,0,.15);padding:12px 24px;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:var(--yellow);font-weight:500;animation:fadeInUp .5s ease-out}
+    .warning-banner iconify-icon{font-size:18px;flex-shrink:0}
+    .warning-banner strong{color:var(--yellow-light)}
+
+    /* Hero */
+    .hero{padding:50px 24px 50px;text-align:center;position:relative;z-index:1}
+    .hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--yellow-glow);border:1px solid rgba(255,214,0,.2);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--yellow);margin-bottom:24px;animation:fadeInUp .6s ease-out}
+    .hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,6vw,64px);font-weight:900;line-height:1.05;margin-bottom:16px;animation:fadeInUp .6s ease-out .1s both}
+    .hero h1 span{color:var(--yellow)}
+    .hero p{font-size:17px;color:var(--gray);max-width:500px;margin:0 auto;line-height:1.6;animation:fadeInUp .6s ease-out .2s both}
+
+    /* Filters */
+    .filters{display:flex;justify-content:center;gap:8px;padding:0 24px 40px;flex-wrap:wrap;position:relative;z-index:1;animation:fadeInUp .6s ease-out .3s both}
+    .filter-btn{padding:8px 20px;border-radius:100px;border:1px solid var(--black-border);background:var(--black-light);color:var(--gray);font-size:13px;font-weight:500;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+    .filter-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+    .filter-btn.active{background:var(--yellow);color:var(--black);border-color:var(--yellow);font-weight:600;box-shadow:0 0 20px var(--yellow-glow)}
+
+    /* Product Grid */
+    .products{max-width:1280px;margin:0 auto;padding:0 24px 140px;position:relative;z-index:1}
+    .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px}
+
+    /* Product Card */
+    .product-card{background:var(--black-card);border:1px solid var(--black-border);border-radius:20px;overflow:hidden;transition:all .4s cubic-bezier(.25,.46,.45,.94);animation:fadeInUp .6s ease-out both}
+    .product-card:hover{transform:translateY(-8px);border-color:rgba(255,214,0,.3);box-shadow:0 20px 60px -15px rgba(255,214,0,.15)}
+    .product-img-wrap{position:relative;height:200px;overflow:hidden;background:var(--black-light)}
+    .product-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+    .product-card:hover .product-img-wrap img{transform:scale(1.08)}
+    .product-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,.8) 0%,transparent 60%)}
+    .product-category-tag{position:absolute;top:12px;left:12px;background:rgba(10,10,10,.7);backdrop-filter:blur(10px);color:var(--yellow);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;padding:4px 10px;border-radius:6px;border:1px solid rgba(255,214,0,.2)}
+    .product-fresh-badge{position:absolute;top:12px;right:12px;background:#00C853;color:var(--black);font-size:10px;font-weight:700;padding:4px 8px;border-radius:6px;display:flex;align-items:center;gap:3px}
+    .product-info{padding:20px}
+    .product-name{font-size:18px;font-weight:700;margin-bottom:6px}
+    .product-desc{font-size:13px;color:var(--gray);line-height:1.5;margin-bottom:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .product-weights{display:flex;gap:12px;margin-bottom:16px}
+    .weight-chip{display:flex;flex-direction:column;align-items:center;background:var(--black-light);border:1px solid var(--black-border);border-radius:10px;padding:8px 14px;flex:1}
+    .weight-label{font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px}
+    .weight-value{font-size:14px;font-weight:700;color:var(--yellow-light)}
+    .product-bottom{display:flex;align-items:center;justify-content:space-between}
+    .product-price{font-size:24px;font-weight:800;color:var(--yellow)}
+    .product-price span{font-size:13px;font-weight:400;color:var(--gray)}
+    .add-btn{display:flex;align-items:center;gap:6px;background:var(--yellow);color:var(--black);border:none;border-radius:12px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+    .add-btn:hover{background:var(--yellow-light);transform:scale(1.05)}
+    .add-btn:active{transform:scale(.95)}
+    .qty-controls{display:flex;align-items:center;background:var(--black-light);border:1px solid var(--yellow);border-radius:12px;overflow:hidden}
+    .qty-btn{width:36px;height:38px;background:none;border:none;color:var(--yellow);font-size:18px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+    .qty-btn:hover{background:var(--yellow-glow)}
+    .qty-num{width:32px;text-align:center;font-size:14px;font-weight:700}
+
+    /* Floating Island */
+    .floating-island{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);z-index:200;background:rgba(26,26,26,.95);border:1px solid var(--black-border);backdrop-filter:blur(20px);border-radius:20px;padding:14px 24px;display:flex;align-items:center;gap:16px;box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px var(--yellow-glow);transition:transform .5s cubic-bezier(.34,1.56,.64,1);max-width:95vw}
+    .floating-island.visible{transform:translateX(-50%) translateY(0)}
+    .island-count{width:44px;height:44px;background:var(--yellow);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--black);flex-shrink:0}
+    .island-text{}
+    .island-label{font-size:11px;color:var(--gray);text-transform:uppercase;letter-spacing:1px}
+    .island-total{font-size:22px;font-weight:800;color:var(--yellow)}
+    .island-divider{width:1px;height:36px;background:var(--black-border)}
+    .whatsapp-btn{display:flex;align-items:center;gap:8px;background:#25D366;color:#fff;border:none;border-radius:14px;padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif;white-space:nowrap}
+    .whatsapp-btn:hover{background:#20BD5A;transform:scale(1.03);box-shadow:0 0 25px rgba(37,211,102,.3)}
+    .whatsapp-btn:active{transform:scale(.97)}
+    .island-close{position:absolute;top:-8px;right:-8px;width:24px;height:24px;background:var(--black);border:1px solid var(--black-border);border-radius:50%;color:var(--gray);font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .island-close:hover{color:var(--white);border-color:var(--yellow)}
+
+    /* Cart Panel */
+    .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:150;opacity:0;visibility:hidden;transition:all .3s}
+    .cart-overlay.open{opacity:1;visibility:visible}
+    .cart-panel{position:fixed;top:0;right:0;bottom:0;width:400px;max-width:90vw;background:var(--black-light);border-left:1px solid var(--black-border);z-index:160;transform:translateX(100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94);display:flex;flex-direction:column}
+    .cart-panel.open{transform:translateX(0)}
+    .cart-header{padding:24px;border-bottom:1px solid var(--black-border);display:flex;align-items:center;justify-content:space-between}
+    .cart-header h2{font-size:20px;font-weight:700;display:flex;align-items:center;gap:8px}
+    .cart-header h2 iconify-icon{color:var(--yellow)}
+    .cart-close-btn{width:36px;height:36px;background:var(--black);border:1px solid var(--black-border);border-radius:10px;color:var(--white);font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+    .cart-close-btn:hover{border-color:var(--yellow);color:var(--yellow)}
+    .cart-items{flex:1;overflow-y:auto;padding:16px 24px}
+    .cart-items::-webkit-scrollbar{width:4px}
+    .cart-items::-webkit-scrollbar-track{background:transparent}
+    .cart-items::-webkit-scrollbar-thumb{background:var(--black-border);border-radius:2px}
+    .cart-empty{text-align:center;padding:60px 20px;color:var(--gray)}
+    .cart-empty iconify-icon{font-size:48px;margin-bottom:16px;opacity:.3}
+    .cart-empty p{font-size:14px}
+    .cart-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--black-border);animation:fadeInUp .3s ease-out}
+    .cart-item-img{width:60px;height:60px;border-radius:12px;object-fit:cover;flex-shrink:0}
+    .cart-item-info{flex:1}
+    .cart-item-name{font-size:14px;font-weight:600;margin-bottom:4px}
+    .cart-item-weight{font-size:11px;color:var(--gray);margin-bottom:8px}
+    .cart-item-bottom{display:flex;align-items:center;justify-content:space-between}
+    .cart-item-price{font-size:15px;font-weight:700;color:var(--yellow)}
+    .cart-item-remove{background:none;border:none;color:#FF1744;font-size:11px;cursor:pointer;font-weight:600;font-family:'Inter',sans-serif;padding:4px 8px;border-radius:6px;transition:background .2s}
+    .cart-item-remove:hover{background:rgba(255,23,68,.1)}
+    .cart-footer{padding:24px;border-top:1px solid var(--black-border)}
+    .cart-total-row{display:flex;justify-content:space-between;margin-bottom:8px}
+    .cart-total-label{color:var(--gray);font-size:14px}
+    .cart-total-value{font-weight:600;font-size:14px}
+    .cart-total-row.final .cart-total-label{font-size:16px;font-weight:700;color:var(--white)}
+    .cart-total-row.final .cart-total-value{font-size:22px;font-weight:800;color:var(--yellow)}
+    .cart-wa-btn{width:100%;margin-top:16px;padding:14px;background:#25D366;color:#fff;border:none;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px}
+    .cart-wa-btn:hover{background:#20BD5A;transform:scale(1.02);box-shadow:0 0 25px rgba(37,211,102,.3)}
+    .cart-clear-btn{width:100%;margin-top:8px;padding:12px;background:transparent;color:var(--gray);border:1px solid var(--black-border);border-radius:14px;font-size:13px;font-weight:600;cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
+    .cart-clear-btn:hover{border-color:#FF1744;color:#FF1744}
+
+    /* Toast */
+    .toast-container{position:fixed;top:90px;right:24px;z-index:300;display:flex;flex-direction:column;gap:8px}
+    .toast{background:var(--black-light);border:1px solid var(--black-border);border-left:3px solid var(--yellow);border-radius:12px;padding:12px 20px;display:flex;align-items:center;gap:10px;font-size:13px;font-weight:500;box-shadow:0 10px 40px rgba(0,0,0,.4);animation:toastIn .4s ease-out,toastOut .3s ease-in 2.2s forwards;min-width:250px}
+    .toast iconify-icon{color:var(--yellow);font-size:18px;flex-shrink:0}
+
+    /* Loading / Error / Empty */
+    .loading{text-align:center;padding:100px 20px;color:var(--gray);grid-column:1/-1}
+    .loading-spinner{width:40px;height:40px;border:3px solid var(--black-border);border-top-color:var(--yellow);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .error-msg{text-align:center;padding:100px 20px;color:var(--gray);grid-column:1/-1}
+    .error-msg iconify-icon{font-size:48px;margin-bottom:16px;color:#FF1744}
+    .no-results{text-align:center;padding:80px 20px;color:var(--gray);grid-column:1/-1}
+    .no-results iconify-icon{font-size:48px;margin-bottom:16px;opacity:.3}
+
+    .footer{text-align:center;padding:40px 24px;border-top:1px solid var(--black-border);color:var(--gray);font-size:13px;position:relative;z-index:1}
+
+    @keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+    @keyframes toastOut{to{transform:translateX(100%);opacity:0}}
+    @keyframes fadeInUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+    @media(max-width:768px){
+      .search-box{display:none}
+      .product-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+      .floating-island{padding:12px 16px;gap:10px;bottom:12px}
+      .island-divider{display:none}
+      .whatsapp-btn{padding:10px 18px;font-size:13px}
+      .island-total{font-size:18px}
+    }
+    @media(max-width:480px){
+      .product-grid{grid-template-columns:1fr}
+      .hero{padding:30px 16px 40px}
+      .products{padding:0 16px 120px}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">🐟</div>
+        <div>
+          <div class="logo-text">SeaGold</div>
+          <div class="logo-sub">Premium Seafood</div>
+        </div>
+      </a>
+      <div class="header-actions">
+        <div class="search-box">
+          <iconify-icon icon="lucide:search" style="color:#888;font-size:16px"></iconify-icon>
+          <input type="text" id="searchInput" placeholder="Search seafood..." oninput="filterProducts()">
+        </div>
+        <button class="cart-btn" onclick="toggleCart()">
+          <iconify-icon icon="lucide:shopping-bag" style="font-size:20px;color:#0a0a0a"></iconify-icon>
+          <div class="cart-badge empty" id="cartBadge">0</div>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Price Warning -->
+  <div class="warning-banner">
+    <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+    <span><strong>⚠ Note:</strong> All prices are tentative and may vary based on daily market rates. Final prices will be confirmed on order.</span>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge">
+      <iconify-icon icon="lucide:sparkles" style="font-size:14px"></iconify-icon>
+      Fresh Catch Daily
+    </div>
+    <h1>Ocean's Finest<br><span>Delivered Fresh</span></h1>
+    <p>Hand-picked premium seafood straight from the coast to your doorstep.</p>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters" id="filterContainer"></div>
+
+  <!-- Products -->
+  <section class="products">
+    <div class="product-grid" id="productGrid">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading catalogue...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cart Overlay -->
+  <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+  <!-- Cart Panel -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h2><iconify-icon icon="lucide:shopping-bag"></iconify-icon> Your Selection</h2>
+      <button class="cart-close-btn" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <div class="cart-empty">
+        <iconify-icon icon="lucide:fish-off"></iconify-icon>
+        <p>Your selection is empty<br><small style="color:#555">Browse the catalogue below</small></p>
+      </div>
+    </div>
+    <div class="cart-footer" id="cartFooter" style="display:none">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Subtotal</span>
+        <span class="cart-total-value" id="cartSubtotal">₹0</span>
+      </div>
+      <div class="cart-total-row">
+        <span class="cart-total-label">Note</span>
+        <span class="cart-total-value" style="color:var(--yellow);font-size:11px">Tentative*</span>
+      </div>
+      <div class="cart-total-row final">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-value" id="cartTotal">₹0</span>
+      </div>
+      <button class="cart-wa-btn" onclick="sendToWhatsApp()">
+        <iconify-icon icon="logos:whatsapp-icon" style="font-size:18px"></iconify-icon>
+        Send Order via WhatsApp
+      </button>
+      <button class="cart-clear-btn" onclick="clearCart()">
+        <iconify-icon icon="lucide:trash-2" style="font-size:13px;vertical-align:middle;margin-right:4px"></iconify-icon>
+        Clear Selection
+      </button>
+    </div>
+  </div>
+
+  <!-- Floating Island -->
+  <div class="floating-island" id="floatingIsland">
+    <button class="island-close" onclick="closeFloatingIsland()">✕</button>
+    <div class="island-count" id="islandCount">0</div>
+    <div class="island-text">
+      <div class="island-label">Items Selected</div>
+      <div class="island-total" id="islandTotal">₹0</div>
+    </div>
+    <div class="island-divider"></div>
+    <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+      <iconify-icon icon="logos:whatsapp-icon" style="font-size:20px"></iconify-icon>
+      Send via WhatsApp
+    </button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer class="footer">
+    <p>© 2025 SeaGold — Premium Seafood Catalogue</p>
+  </footer>
+
+<script>
+// =============================================
+//  CHANGE THIS to your JSON file path
+// =============================================
+const DATA_URL = 'data.json';
+
+// =============================================
+//  STATE
+// =============================================
+let PRODUCTS = [];
+let WHATSAPP_NUMBER = '';
+let cart = {};
+let currentFilter = 'all';
+let searchQuery = '';
+
+// =============================================
+//  LOAD DATA
+// =============================================
+fetch(DATA_URL)
+  .then(res => {
+    if (!res.ok) throw new Error('Failed to load');
+    return res.json();
+  })
+  .then(data => {
+    WHATSAPP_NUMBER = data.whatsappNumber || '';
+    PRODUCTS = data.items || [];
+    if (PRODUCTS.length === 0) throw new Error('No items found');
+    buildFilters();
+    renderProducts();
+  })
+  .catch(err => {
+    document.getElementById('productGrid').innerHTML = `
+      <div class="error-msg">
+        <iconify-icon icon="lucide:alert-triangle"></iconify-icon>
+        <p>Could not load <strong>data.json</strong></p>
+        <p style="font-size:12px;margin-top:8px;color:#555">${err.message}. Check the file exists and matches the required format.</p>
+      </div>`;
+  });
+
+// =============================================
+//  BUILD FILTERS from categories in data
+// =============================================
+function buildFilters() {
+  const cats = [...new Set(PRODUCTS.map(p => p.category))];
+  const el = document.getElementById('filterContainer');
+  el.innerHTML = '<button class="filter-btn active" onclick="setFilter(\'all\',this)">All Items</button>' +
+    cats.map(c => `<button class="filter-btn" onclick="setFilter('${c}',this)">${c}</button>`).join('');
+}
+
+// =============================================
+//  RENDER PRODUCTS
+// =============================================
+function renderProducts() {
+  const grid = document.getElementById('productGrid');
+  let list = PRODUCTS;
+
+  if (currentFilter !== 'all') list = list.filter(p => p.category === currentFilter);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    list = list.filter(p =>
+      p.name.toLowerCase().includes(q) ||
+      p.description.toLowerCase().includes(q) ||
+      p.category.toLowerCase().includes(q)
+    );
+  }
+
+  if (!list.length) {
+    grid.innerHTML = `<div class="no-results"><iconify-icon icon="lucide:search-x"></iconify-icon><p>No items found.</p></div>`;
+    return;
+  }
+
+  grid.innerHTML = list.map((p, i) => {
+    const inCart = cart[p.id];
+    return `
+    <div class="product-card" style="animation-delay:${i * .05}s">
+      <div class="product-img-wrap">
+        <img src="${p.image}" alt="${p.name}" loading="lazy"
+             onerror="this.src='https://picsum.photos/seed/sea${p.id}/600/400.jpg'">
+        <div class="product-img-overlay"></div>
+        <div class="product-category-tag">${p.category}</div>
+        ${p.fresh ? '<div class="product-fresh-badge"><iconify-icon icon="lucide:leaf" style="font-size:10px"></iconify-icon> Fresh</div>' : ''}
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="product-desc">${p.description}</div>
+        <div class="product-weights">
+          <div class="weight-chip">
+            <span class="weight-label">Net</span>
+            <span class="weight-value">${p.netWeight}</span>
+          </div>
+          <div class="weight-chip">
+            <span class="weight-label">Gross</span>
+            <span class="weight-value">${p.grossWeight}</span>
+          </div>
+        </div>
+        <div class="product-bottom">
+          <div class="product-price">₹${p.price} <span>/pc</span></div>
+          ${inCart ? `
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty(${p.id},-1)">−</button>
+              <span class="qty-num">${inCart.qty}</span>
+              <button class="qty-btn" onclick="updateQty(${p.id},1)">+</button>
+            </div>
+          ` : `
+            <button class="add-btn" onclick="addToCart(${p.id})">
+              <iconify-icon icon="lucide:plus" style="font-size:16px"></iconify-icon> Add
+            </button>
+          `}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// =============================================
+//  CART LOGIC
+// =============================================
+function addToCart(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  cart[id] = { qty: 1, product: p };
+  sync();
+  showToast(`${p.name} added`);
+}
+
+function updateQty(id, d) {
+  if (!cart[id]) return;
+  cart[id].qty += d;
+  if (cart[id].qty <= 0) { delete cart[id]; showToast('Removed'); }
+  sync();
+}
+
+function removeFromCart(id) {
+  delete cart[id];
+  sync();
+}
+
+function clearCart() {
+  cart = {};
+  sync();
+  showToast('Selection cleared');
+}
+
+function getCount() { return Object.values(cart).reduce((s, i) => s + i.qty, 0); }
+function getTotal() { return Object.values(cart).reduce((s, i) => s + (i.product.price * i.qty), 0); }
+
+function sync() {
+  const count = getCount(), total = getTotal();
+  const badge = document.getElementById('cartBadge');
+  badge.textContent = count;
+  badge.classList.toggle('empty', !count);
+  badge.classList.add('bounce');
+  setTimeout(() => badge.classList.remove('bounce'), 400);
+
+  const items = Object.values(cart);
+  const cartEl = document.getElementById('cartItems');
+  const footerEl = document.getElementById('cartFooter');
+
+  if (!items.length) {
+    cartEl.innerHTML = `<div class="cart-empty"><iconify-icon icon="lucide:fish-off"></iconify-icon><p>Your selection is empty<br><small style="color:#555">Browse the catalogue below</small></p></div>`;
+    footerEl.style.display = 'none';
+  } else {
+    cartEl.innerHTML = items.map(({ product: p, qty }) => `
+      <div class="cart-item">
+        <img class="cart-item-img" src="${p.image}" alt="${p.name}"
+             onerror="this.src='https://picsum.photos/seed/sea${p.id}/120/120.jpg'">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${p.name}</div>
+          <div class="cart-item-weight">Net: ${p.netWeight} · Gross: ${p.grossWeight}</div>
+          <div class="cart-item-bottom">
+            <span class="cart-item-price">₹${p.price * qty}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="updateQty(${p.id},-1)">−</button>
+                <span class="qty-num">${qty}</span>
+                <button class="qty-btn" onclick="updateQty(${p.id},1)">+</button>
+              </div>
+              <button class="cart-item-remove" onclick="removeFromCart(${p.id})">Remove</button>
+            </div>
+          </div>
+        </div>
+      </div>`).join('');
+    footerEl.style.display = 'block';
+  }
+
+  document.getElementById('cartSubtotal').textContent = `₹${total}`;
+  document.getElementById('cartTotal').textContent = `₹${total}`;
+  document.getElementById('islandCount').textContent = count;
+  document.getElementById('islandTotal').textContent = `₹${total}`;
+  document.getElementById('floatingIsland').classList.toggle('visible', count > 0);
+
+  renderProducts();
+}
+
+// =============================================
+//  CART PANEL
+// =============================================
+function toggleCart() {
+  document.getElementById('cartOverlay').classList.toggle('open');
+  document.getElementById('cartPanel').classList.toggle('open');
+}
+function closeFloatingIsland() {
+  document.getElementById('floatingIsland').classList.remove('visible');
+}
+
+// =============================================
+//  WHATSAPP — number from JSON, no user input
+// =============================================
+function sendToWhatsApp() {
+  if (!getCount()) { showToast('Nothing selected!'); return; }
+  if (!WHATSAPP_NUMBER) { showToast('WhatsApp number not configured in data.json'); return; }
+
+  let msg = '🐟 *SeaGold — Order Request*\n';
+  msg += '━━━━━━━━━━━━━━━━━\n\n';
+
+  let total = 0;
+  Object.values(cart).forEach(({ product: p, qty }, i) => {
+    const sub = p.price * qty;
+    total += sub;
+    msg += `*${i + 1}. ${p.name}*\n`;
+    msg += `   Qty: ${qty} × ₹${p.price} = ₹${sub}\n`;
+    msg += `   Net: ${p.netWeight} | Gross: ${p.grossWeight}\n\n`;
+  });
+
+  msg += '━━━━━━━━━━━━━━━━━\n';
+  msg += `*Total: ₹${total}*\n`;
+  msg += `*Items: ${getCount()}*\n\n`;
+  msg += '⚠ *Note: Prices are tentative & may vary based on market rates.*\n\n';
+  msg += 'Please confirm availability and final prices. Thank you! 🙏';
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// =============================================
+//  FILTERS & SEARCH
+// =============================================
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+function filterProducts() {
+  searchQuery = document.getElementById('searchInput').value;
+  renderProducts();
+}
+
+// =============================================
+//  TOAST
+// =============================================
+function showToast(message) {
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<iconify-icon icon="lucide:check-circle"></iconify-icon> ${message}`;
+  document.getElementById('toastContainer').appendChild(t);
+  setTimeout(() => t.remove(), 2600);
+}
+</script>
+
+</body>
+</html>
