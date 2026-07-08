@@ -1,0 +1,225 @@
+{
+  "whatsappNumber": "919876543210",
+  "items": [
+    {
+      "id": 1,
+      "name": "Seabass",
+      "category": "Fish",
+      "price": 730,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium seabass steaks, ideal for curry.",
+      "image": "images/Seabass.jpg",
+      "fresh": true
+    },
+    {
+      "id": 2,
+      "name": "Vannamei Small",
+      "category": "Shrimp",
+      "price": 320,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium Vannamei prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Vannamei Small.jpg",
+      "fresh": true
+    },
+    {
+      "id": 3,
+      "name": "Vannamei Medium",
+      "category": "Shrimp",
+      "price": 400,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium Vannamei prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Vannamei Medium.jpg",
+      "fresh": true
+    },
+    {
+      "id": 4,
+      "name": "Vannamei Big",
+      "category": "Shrimp",
+      "price": 650,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium Vannamei prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Vannamei Big.jpg",
+      "fresh": true
+    },
+    {
+      "id": 5,
+      "name": "Tiger Prawns Big",
+      "category": "Shrimp",
+      "price": 700,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium tiger prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Tiger Prawns Big.jpg",
+      "fresh": true
+    },
+    {
+      "id": 6,
+      "name": "Tiger Prawan Medium",
+      "category": "Shrimp",
+      "price": 550,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium tiger prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Tiger Prawan Medium.jpg",
+      "fresh": true
+    },
+    {
+      "id": 7,
+      "name": "Tiger Prawns Small",
+      "category": "Shrimp",
+      "price": 500,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium tiger prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Tiger Prawns Small.jpg",
+      "fresh": true
+    },
+    {
+      "id": 8,
+      "name": "Salt Water Prawn",
+      "category": "Shrimp",
+      "price": 420,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium salt water prawns, ideal for curry, grilling, or frying.",
+      "image": "images/Salt Water Prawn.jpg",
+      "fresh": true
+    },
+    {
+      "id": 9,
+      "name": "Grey Mullet",
+      "category": "Fish",
+      "price": 350,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium grey mullet, ideal for curry, grilling, or frying.",
+      "image": "images/Grey Mullet.jpg",
+      "fresh": true
+    },
+    {
+      "id": 10,
+      "name": "Selaavathi",
+      "category": "Fish",
+      "price": 220,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium Selaavathi fish, ideal for curry, grilling, or frying.",
+      "image": "images/Selaavathi.jpg",
+      "fresh": true
+    },
+    {
+      "id": 11,
+      "name": "White Anchovy",
+      "category": "Fish",
+      "price": 200,
+      "netWeight": "600g",
+      "grossWeight": "1000g",
+      "description": "Premium white anchovy, ideal for curry, grilling, or frying.",
+      "image": "images/White anchovy.jpg",
+      "fresh": true
+    },
+    {
+      "id": 12,
+      "name": "Silver Grey Mullet",
+      "category": "Fish",
+      "price": 380,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium silver grey mullet, ideal for curry, grilling, or frying.",
+      "image": "images/Sliver Grey Mullet.jpg",
+      "fresh": true
+    },
+    {
+      "id": 13,
+      "name": "Mud Crabs Big",
+      "category": "Crab",
+      "price": 900,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium mud crabs, ideal for curry, grilling, or frying.",
+      "image": "images/Mud crabs Big.jpg",
+      "fresh": true
+    },
+    {
+      "id": 14,
+      "name": "Mud Crabs Medium",
+      "category": "Crab",
+      "price": 700,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium mud crabs, ideal for curry, grilling, or frying.",
+      "image": "images/Mud Crabs Medium.jpg",
+      "fresh": true
+    },
+    {
+      "id": 15,
+      "name": "Mud Crabs Small",
+      "category": "Crab",
+      "price": 550,
+      "netWeight": "500g",
+      "grossWeight": "1000g",
+      "description": "Premium mud crabs, ideal for curry, grilling, or frying.",
+      "image": "images/Mud Crabs Small.jpg",
+      "fresh": true
+    },
+    {
+      "id": 16,
+      "name": "Katla/Botchu",
+      "category": "Fish",
+      "price": 200,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium Katla/Botchu fish, ideal for curry, grilling, or frying.",
+      "image": "images/Katla or Botchu.jpg",
+      "fresh": true
+    },
+    {
+      "id": 17,
+      "name": "Grass Carp",
+      "category": "Fish",
+      "price": 200,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium grass carp, ideal for curry, grilling, or frying.",
+      "image": "images/Grass Carp.jpg",
+      "fresh": true
+    },
+    {
+      "id": 18,
+      "name": "Koyyinga",
+      "category": "Fish",
+      "price": 400,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium Koyyinga fish, ideal for curry, grilling, or frying.",
+      "image": "images/Koyyinga.jpg",
+      "fresh": true
+    },
+    {
+      "id": 19,
+      "name": "White Pomfret",
+      "category": "Fish",
+      "price": 1500,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "One of the most prized ocean fish, known for its delicate taste and premium quality.",
+      "image": "images/White Pomfret.jpg",
+      "fresh": true
+    },
+    {
+      "id": 20,
+      "name": "Black Pomfret",
+      "category": "Fish",
+      "price": 1300,
+      "netWeight": "550g",
+      "grossWeight": "1000g",
+      "description": "Premium black pomfret with rich flavor, perfect for a fresh seafood meal.",
+      "image": "images/Black Pomfret.jpg",
+      "fresh": true
+    }
+  ]
+}
