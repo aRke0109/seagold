@@ -3,7 +3,7 @@
   "items": [
     {
       "id": 1,
-      "name": "Seabass",
+      "name": "Seabass/పండుగప్ప",
       "category": "Fish",
       "price": 730,
       "netWeight": "550g",
@@ -14,7 +14,7 @@
     },
     {
       "id": 2,
-      "name": "Vannamei Small",
+      "name": "Vannamei Small/వెనామీ రొయ్యలు",
       "category": "Shrimp",
       "price": 320,
       "netWeight": "500g",
@@ -25,7 +25,7 @@
     },
     {
       "id": 3,
-      "name": "Vannamei Medium",
+      "name": "Vannamei Medium/వెనామీ రొయ్యలు",
       "category": "Shrimp",
       "price": 400,
       "netWeight": "500g",
@@ -36,7 +36,7 @@
     },
     {
       "id": 4,
-      "name": "Vannamei Big",
+      "name": "Vannamei Big/వెనామీ రొయ్యలు",
       "category": "Shrimp",
       "price": 650,
       "netWeight": "500g",
@@ -47,7 +47,7 @@
     },
     {
       "id": 5,
-      "name": "Tiger Prawns Big",
+      "name": "Tiger Prawns Big/గాజు రొయ్యలు",
       "category": "Shrimp",
       "price": 700,
       "netWeight": "500g",
@@ -58,7 +58,7 @@
     },
     {
       "id": 6,
-      "name": "Tiger Prawan Medium",
+      "name": "Tiger Prawan Medium/గాజు రొయ్యలు",
       "category": "Shrimp",
       "price": 550,
       "netWeight": "500g",
@@ -69,7 +69,7 @@
     },
     {
       "id": 7,
-      "name": "Tiger Prawns Small",
+      "name": "Tiger Prawns Small/గాజు రొయ్యలు",
       "category": "Shrimp",
       "price": 500,
       "netWeight": "500g",
@@ -80,7 +80,7 @@
     },
     {
       "id": 8,
-      "name": "Salt Water Prawn",
+      "name": "Salt Water Prawn/శాఖ రొయ్యలు",
       "category": "Shrimp",
       "price": 420,
       "netWeight": "500g",
@@ -91,7 +91,7 @@
     },
     {
       "id": 9,
-      "name": "Grey Mullet",
+      "name": "Grey Mullet/కట్టి పరుగులు",
       "category": "Fish",
       "price": 350,
       "netWeight": "550g",
@@ -102,7 +102,7 @@
     },
     {
       "id": 10,
-      "name": "Selaavathi",
+      "name": "Selaavathi/శీలావతి",
       "category": "Fish",
       "price": 220,
       "netWeight": "550g",
@@ -113,7 +113,7 @@
     },
     {
       "id": 11,
-      "name": "White Anchovy",
+      "name": "White Anchovy/నెత్తళ్లు",
       "category": "Fish",
       "price": 200,
       "netWeight": "600g",
@@ -124,7 +124,7 @@
     },
     {
       "id": 12,
-      "name": "Silver Grey Mullet",
+      "name": "Silver Grey Mullet/తుళ్లు చేప",
       "category": "Fish",
       "price": 380,
       "netWeight": "550g",
@@ -135,7 +135,7 @@
     },
     {
       "id": 13,
-      "name": "Mud Crabs Big",
+      "name": "Mud Crabs Big/మండ పీత",
       "category": "Crab",
       "price": 900,
       "netWeight": "500g",
@@ -146,7 +146,7 @@
     },
     {
       "id": 14,
-      "name": "Mud Crabs Medium",
+      "name": "Mud Crabs Medium/మండ పీత",
       "category": "Crab",
       "price": 700,
       "netWeight": "500g",
@@ -157,7 +157,7 @@
     },
     {
       "id": 15,
-      "name": "Mud Crabs Small",
+      "name": "Mud Crabs Small/మండ పీత",
       "category": "Crab",
       "price": 550,
       "netWeight": "500g",
@@ -168,7 +168,7 @@
     },
     {
       "id": 16,
-      "name": "Katla/Botchu",
+      "name": "Katla/Botchu/కట్ల బొచ్చు",
       "category": "Fish",
       "price": 200,
       "netWeight": "550g",
@@ -179,7 +179,7 @@
     },
     {
       "id": 17,
-      "name": "Grass Carp",
+      "name": "Grass Carp/గడ్డి చేప",
       "category": "Fish",
       "price": 200,
       "netWeight": "550g",
@@ -190,7 +190,7 @@
     },
     {
       "id": 18,
-      "name": "Koyyinga",
+      "name": "Koyyinga/కోయింగా / మేక చేప",
       "category": "Fish",
       "price": 400,
       "netWeight": "550g",
@@ -201,7 +201,7 @@
     },
     {
       "id": 19,
-      "name": "White Pomfret",
+      "name": "White Pomfret/చందువా",
       "category": "Fish",
       "price": 1500,
       "netWeight": "550g",
@@ -212,7 +212,7 @@
     },
     {
       "id": 20,
-      "name": "Black Pomfret",
+      "name": "Black Pomfret/చందువా",
       "category": "Fish",
       "price": 1300,
       "netWeight": "550g",
